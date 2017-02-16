@@ -1,0 +1,3 @@
+- src: https://github.com/dpujadas/ansible-role-docker-engine.git
+  version: master
+  name: docker-engine

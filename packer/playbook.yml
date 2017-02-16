@@ -1,0 +1,21 @@
+- hosts: 'all'
+  become: True
+  pre_tasks:
+    - name: Install python for Ansible
+      raw: >
+        test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+      changed_when: False
+
+    - name: Gather facts
+      setup:
+      tags:
+        - always
+  roles:
+    - {
+      role: docker-engine,
+      docker_engine_init_system: 'systemd'
+    }
+  tasks:
+    - name: Add ubuntu user to docker group
+      shell: >
+        usermod -aG docker ubuntu

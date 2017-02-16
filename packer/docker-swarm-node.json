@@ -1,0 +1,23 @@
+{
+  "variables": {
+    "project_id": null
+  },
+  "provisioners": [
+    {
+      "type": "ansible",
+      "playbook_file": "./playbook.yml",
+      "user": "ubuntu"
+    }
+  ],
+  "builders": [
+    {
+      "image_description": "Dockme image for docker swarm",
+      "image_name": "docker-swarm-{{ timestamp }}",
+      "project_id": "{{user `project_id`}}",
+      "source_image_family": "ubuntu-1604-lts",
+      "ssh_username": "ubuntu",
+      "type": "googlecompute",
+      "zone": "europe-west1-b"
+    }
+  ]
+}
