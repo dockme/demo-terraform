@@ -1,0 +1,6 @@
+- hosts: localhost
+  connection: local
+  tasks:
+    - name: Retrieve secret/hello using native hashi_vault plugin
+      debug: msg="{{ lookup('hashi_vault', 'secret=secret/demo/key token=1c473c89-4842-e2dd-3a4e-479835f3c415') }}"
+#      debug: msg="{{ lookup('hashi_vault', 'secret=secret/demo/key token=1c473c89-4842-e2dd-3a4e-479835f3c415 url=http://127.0.0.1:8200') }}"

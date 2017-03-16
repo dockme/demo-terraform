@@ -10,10 +10,22 @@
       setup:
       tags:
         - always
+
+    - name: Install ca {{ item }}
+      copy:
+        content: "{{ lookup('hashi_vault', 'secret=secret/demo/{{ item }} token={{ hashi_vault_token }}') }}"
+        dest: '/etc/ssl/private/ca{{ item }}.pem'
+        mode: '0600'
+      with_items:
+        - key
+        - cert
   roles:
     - {
       role: docker-engine,
-      docker_engine_init_system: 'systemd'
+      docker_engine_init_system: 'systemd',
+      docker_engine_state: 'stopped',
+      docker_engine_enabled: 'no',
+      docker_engine_opts: '--tlsverify --tlscacert=/etc/ssl/private/cacert.pem --tlscert=/etc/ssl/private/servercert.pem --tlskey=/etc/ssl/private/serverkey.pem -H=tcp://0.0.0.0:2376'
     }
   tasks:
     - name: Add ubuntu user to docker group

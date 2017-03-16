@@ -1,12 +1,16 @@
 {
   "variables": {
-    "project_id": null
+    "project_id": null,
+    "hashi_vault_token": null
   },
   "provisioners": [
     {
       "type": "ansible",
       "playbook_file": "./playbook.yml",
-      "user": "ubuntu"
+      "user": "ubuntu",
+      "extra_arguments": [
+        "-e", "hashi_vault_token={{user `hashi_vault_token`}}"
+      ]
     }
   ],
   "builders": [
